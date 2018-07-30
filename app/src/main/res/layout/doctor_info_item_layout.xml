@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/w200"
+        android:gravity="center"
+        android:minWidth="@dimen/w160"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/w10"
+        android:paddingRight="@dimen/w10">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="王医生"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="@dimen/sp18"/>
+
+        <TextView
+            android:id="@+id/state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/w20"
+            android:text="已录入信息"
+            android:textColor="@color/colorTextGray"
+            android:textSize="@dimen/sp16"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/w10"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/detail_bt"
+                android:layout_width="@dimen/w60"
+                android:layout_height="@dimen/w40"
+                android:layout_margin="@dimen/w10"
+                android:background="@drawable/btn_bg_selector"
+                android:text="查看"
+                android:textSize="@dimen/sp16"
+                android:textColor="@color/colorWhite"/>
+
+            <Button
+                android:id="@+id/delete_bt"
+                android:layout_width="@dimen/w60"
+                android:layout_height="@dimen/w40"
+                android:layout_margin="@dimen/w10"
+                android:background="@drawable/btn_bg_gray_selector"
+                android:text="清空"
+                android:textSize="@dimen/sp16"
+                android:textColor="@color/colorWhite"/>
+
+            <Button
+                android:id="@+id/insert_bt"
+                android:layout_width="@dimen/w60"
+                android:layout_height="@dimen/w40"
+                android:layout_margin="@dimen/w10"
+                android:background="@drawable/btn_bg_green_selector"
+                android:text="新增"
+                android:textSize="@dimen/sp16"
+                android:textColor="@color/colorWhite"/>
+
+            <ProgressBar
+                android:visibility="gone"
+                android:id="@+id/progressBar"
+                android:layout_width="@dimen/w30"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

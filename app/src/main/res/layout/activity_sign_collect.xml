@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/w30"
+            android:text="请录入签字信息"
+            android:textColor="@color/colorThemeText"
+            android:textSize="@dimen/sp18"/>
+
+        <com.jwx.patriarchsign.app.View.signpad.views.SignaturePad
+            android:id="@+id/sign_pad"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="@dimen/w50"
+            android:layout_marginRight="@dimen/w120"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/signpad_bg"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/commit_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/w20"
+        android:layout_marginLeft="@dimen/w20"
+        android:layout_marginRight="@dimen/w20"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/commit_bt"
+            android:layout_width="@dimen/w120"
+            android:layout_height="@dimen/w50"
+            android:background="@drawable/btn_bg_selector"
+            android:enabled="false"
+            android:onClick="commitSign"
+            android:text="确认签名"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp20"/>
+
+        <Button
+            android:id="@+id/clear_bt"
+            android:layout_width="@dimen/w120"
+            android:layout_height="@dimen/w50"
+            android:layout_marginTop="@dimen/w20"
+            android:background="@drawable/btn_bg_gray_selector"
+            android:enabled="false"
+            android:onClick="clear"
+            android:text="清空"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp20"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/skip_bt"
+        android:layout_width="@dimen/w120"
+        android:layout_height="@dimen/w50"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/w20"
+        android:layout_marginRight="@dimen/w20"
+        android:layout_marginTop="@dimen/w100"
+        android:background="@drawable/btn_bg_selector"
+        android:onClick="onSkip"
+        android:text="跳过"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/sp20"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/back_img"
+        android:layout_width="@dimen/w40"
+        android:layout_height="@dimen/w40"
+        android:layout_marginLeft="@dimen/w30"
+        android:layout_marginTop="@dimen/w20"
+        android:background="@drawable/menu_item_selector"
+        android:onClick="back"
+        android:scaleType="centerInside"
+        android:src="@mipmap/back"
+        android:tint="@color/colorTheme"/>
+</RelativeLayout>

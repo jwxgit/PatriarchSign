@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_user_license"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="在开始签核之前您必须同意用户许可协议"
+        android:textSize="@dimen/sp20"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+
+            android:theme="@style/My_CheckBox"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我已阅读同意"
+            android:layout_marginLeft="@dimen/w20"
+            android:textSize="@dimen/sp20"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoLink="all"
+            android:onClick="onUserlicense"
+            android:text="@string/user_license_text"
+            android:textColor="@color/colorPink"
+            android:textSize="@dimen/sp20"
+            android:textStyle="italic"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/disagree_bt"
+            android:layout_width="@dimen/w120"
+            android:layout_height="@dimen/w50"
+            android:layout_marginLeft="@dimen/w20"
+            android:background="@drawable/btn_bg_gray_selector"
+            android:onClick="onDisAgree"
+            android:text="不同意"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp20"/>
+
+        <Button
+            android:id="@+id/agree_bt"
+            android:layout_width="@dimen/w120"
+            android:layout_height="@dimen/w50"
+            android:layout_marginLeft="@dimen/w20"
+            android:background="@drawable/btn_bg_selector"
+            android:enabled="false"
+            android:onClick="onAgree"
+            android:text="同意"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp20"/>
+    </LinearLayout>
+
+</LinearLayout>

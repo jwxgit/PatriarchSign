@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorActivityBg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="8.2dp"
+        android:paddingLeft="@dimen/w120"
+        android:paddingRight="@dimen/w150"
+        android:paddingTop="@dimen/w30">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="罗强的个人信息"
+            android:textColor="@color/colorThemeText"
+            android:textSize="@dimen/sp18"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/w5">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/w10"
+                android:layout_weight="1"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp">
+
+                <ImageView
+                    android:id="@+id/face_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/face_loading_holder"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:id="@+id/face_loading_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#ddffffff"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <ProgressBar
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="上传中，请稍等"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/sp18"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/face_retry_bt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#ddffffff"
+                        android:gravity="center"
+                        android:onClick="faceRetry"
+                        android:text="上传失败，点击重试"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/sp18"
+                        android:visibility="gone"/>
+                </FrameLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/w10"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="3dp">
+
+                    <ImageView
+                        android:id="@+id/sign_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/sign_loading_holder"/>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:id="@+id/sign_loading_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ddffffff"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <ProgressBar
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="上传中，请稍等"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/sp18"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/sign_retry_bt"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ddffffff"
+                            android:gravity="center"
+                            android:onClick="signRetry"
+                            android:text="上传失败，点击重试"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/sp18"
+                            android:visibility="gone"/>
+                    </FrameLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/w10"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="3dp">
+
+                    <ImageView
+                        android:id="@+id/finger_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/w5"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/finger_loading_holder"/>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:id="@+id/finger_loading_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ddffffff"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <ProgressBar
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="上传中，请稍等"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/sp18"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/finger_retry_bt"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ddffffff"
+                            android:gravity="center"
+                            android:onClick="fingerRetry"
+                            android:text="上传失败，点击重试"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/sp18"
+                            android:visibility="gone"/>
+                    </FrameLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/w40"
+        android:layout_height="@dimen/w40"
+        android:layout_marginLeft="@dimen/w30"
+        android:layout_marginTop="@dimen/w20"
+        android:background="@drawable/menu_item_selector"
+        android:onClick="back"
+        android:scaleType="centerInside"
+        android:src="@mipmap/back"
+        android:tint="@color/colorTheme"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/w10"
+        android:layout_marginRight="@dimen/w30"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/bt_change_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/w40"
+            android:layout_margin="@dimen/w10"
+            android:background="@drawable/btn_bg_selector"
+            android:onClick="changePhoto"
+            android:paddingLeft="@dimen/w10"
+            android:paddingRight="@dimen/w10"
+            android:text="修改照片"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp16"/>
+
+        <Button
+            android:id="@+id/bt_change_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/w40"
+            android:layout_margin="@dimen/w10"
+            android:background="@drawable/btn_bg_selector"
+            android:onClick="changeSign"
+            android:text="修改签名"
+            android:paddingLeft="@dimen/w10"
+            android:paddingRight="@dimen/w10"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp16"/>
+
+        <Button
+            android:id="@+id/bt_change_finger"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/w40"
+            android:layout_margin="@dimen/w10"
+            android:layout_marginTop="@dimen/w16"
+            android:background="@drawable/btn_bg_selector"
+            android:onClick="changeFinger"
+            android:paddingLeft="@dimen/w10"
+            android:paddingRight="@dimen/w10"
+            android:text="修改指纹"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp16"/>
+    </LinearLayout>
+</RelativeLayout>

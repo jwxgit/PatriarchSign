@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">家长签核</string>
+
+    <string name="user_license_text"><u>用户许可协议</u></string>
+    <string name="prompt_msg">请将任意手指放入\n右侧的指纹采集区域\n如图所示\n(注：若长时间无响应，请换手指重新采集)</string>
+
+    <string name="pic_speech">请正对并目视摄像头， 完成请点击下一步、 如需虫签、 请点击清空</string>
+    <string name="sign_speech">请在灰色区域签名，完成请点击下一步、如需虫签、请点击清空</string>
+    <string name="finger_speech">请在右侧指纹识别区域按压大拇指，完成请点击下一步、如需虫签、请点击清空</string>
+
+    <string name="user_license_msg">用户许可协议</string>
+</resources>

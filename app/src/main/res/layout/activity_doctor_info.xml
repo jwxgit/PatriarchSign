@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff">
+
+
+    <LinearLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/w50"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="@dimen/w30"
+                android:layout_height="@dimen/w30"
+                android:background="@drawable/index_text_bg"
+                android:gravity="center"
+                android:text="2"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sp18"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/w10"
+                android:text="录入医生指纹、签字、拍照信息"
+                android:textColor="@color/colorThemeText"
+                android:textSize="@dimen/sp18"/>
+        </LinearLayout>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/w20"
+            app:cardBackgroundColor="#f0f0f0">
+
+            <FrameLayout
+                android:id="@+id/info_list_frame"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/w200"/>
+        </android.support.v7.widget.CardView>
+
+        <Button
+            android:id="@+id/commit_bt"
+            android:layout_width="@dimen/w80"
+            android:layout_height="@dimen/w40"
+            android:layout_marginBottom="@dimen/w20"
+            android:layout_marginLeft="@dimen/w200"
+            android:layout_marginTop="@dimen/w30"
+            android:background="@drawable/btn_bg_selector"
+            android:onClick="nextStep"
+            android:text="跳过"
+            android:textSize="@dimen/sp18"
+            android:textColor="@color/colorWhite"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/w20"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/close_bt"
+            android:layout_width="@dimen/w40"
+            android:layout_height="@dimen/w40"
+            android:layout_marginLeft="@dimen/w30"
+            android:background="@drawable/menu_item_selector"
+            android:onClick="back"
+            android:scaleType="centerInside"
+            android:src="@mipmap/back"
+            android:tint="@color/colorTheme"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/w20"
+            android:text="首次配置请做如下操作"
+            android:textSize="@dimen/sp20"/>
+    </LinearLayout>
+
+</RelativeLayout>
