@@ -3,7 +3,7 @@
 # value of 3.4.0 or lower.
 
 set(pathToProject ${CMAKE_SOURCE_DIR}/..)
-set(pathToOpenCv D:/Developement/OpenCV-android-sdk)#设置OpenCv的路径变量
+set(pathToOpenCv /work/android/OpenCV-android-sdk)#设置OpenCv的路径变量
 
 cmake_minimum_required(VERSION 3.4.1)
 

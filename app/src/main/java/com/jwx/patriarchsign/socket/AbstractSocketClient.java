@@ -1,6 +1,8 @@
 package com.jwx.patriarchsign.socket;
 
 
+import com.jwx.patriarchsign.msg.SocketMessage;
+
 import java.net.InetAddress;
 import java.net.Socket;
 
@@ -26,8 +28,10 @@ public abstract class AbstractSocketClient implements Runnable {
      * <p>
      * 连接建立失败，回调{@code onConnectFailed()}
      *
-     * @param hostIP 服务器主机IP
-     * @param port   端口
+     * @param hostIP
+     *            服务器主机IP
+     * @param port
+     *            端口
      */
     public void connect(String hostIP, int port) {
         this.hostIP = hostIP;
@@ -42,7 +46,7 @@ public abstract class AbstractSocketClient implements Runnable {
             transceiver = new SocketTransceiver(socket) {
 
                 @Override
-                public void onReceive(InetAddress addr, Message message) {
+                public void onReceive(InetAddress addr, SocketMessage message) {
                     AbstractSocketClient.this.onReceive(this, message);
                 }
 
@@ -94,7 +98,8 @@ public abstract class AbstractSocketClient implements Runnable {
     /**
      * 连接建立
      *
-     * @param transceiver SocketTransceiver对象
+     * @param transceiver
+     *            SocketTransceiver对象
      */
     public abstract void onConnect(SocketTransceiver transceiver);
 
@@ -108,17 +113,20 @@ public abstract class AbstractSocketClient implements Runnable {
      * <p>
      * 注意：此回调是在新线程中执行的
      *
-     * @param transceiver SocketTransceiver对象
-     * @param message     字符串
+     * @param transceiver
+     *            SocketTransceiver对象
+     * @param message
+     *            字符串
      */
-    public abstract void onReceive(SocketTransceiver transceiver, Message message);
+    public abstract void onReceive(SocketTransceiver transceiver, SocketMessage message);
 
     /**
      * 连接断开
      * <p>
      * 注意：此回调是在新线程中执行的
      *
-     * @param transceiver SocketTransceiver对象
+     * @param transceiver
+     *            SocketTransceiver对象
      */
     public abstract void onDisconnect(SocketTransceiver transceiver);
 }
