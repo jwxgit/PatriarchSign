@@ -20,7 +20,7 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AbstractSocketClient client;
+    public static AbstractSocketClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +45,25 @@ public class MainActivity extends AppCompatActivity {
         // 设置
 
 //        RecorderManager.getInstance(this).startRecorder(this,0.5f);
-//        Timer timer = new Timer();
-//        timer.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                if(null == client) {
-//                    UIHandler uiHandler = new DefaultUIHandler();
-//                    AbstractSocketClient socketClient = new DefaultSocketClient(uiHandler);
-//                    uiHandler.setSocketClient(socketClient);
-//                    socketClient.connect("198.168.199.110",10000);
-//                }
-//
-//            }
-//        },0,10000);
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (null == client || !client.isConnected()) {
+                    try {
+                        //
+                        System.out.println("断线重连.....");
+                        UIHandler uiHandler = new DefaultUIHandler();
+                        client = new DefaultSocketClient(uiHandler);
+                        uiHandler.setSocketClient(client);
+                        client.connect("192.168.199.110", 10000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }, 0, 10000);
 
         finish();
     }

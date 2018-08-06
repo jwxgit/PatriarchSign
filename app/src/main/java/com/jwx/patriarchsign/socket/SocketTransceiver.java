@@ -79,7 +79,7 @@ public abstract class SocketTransceiver implements Runnable {
     public boolean send(SocketMessage message) {
         if (out != null) {
             try {
-                out = new BufferedOutputStream(socket.getOutputStream(), 1024 * 200);
+                out.write(1);
                 String json = JSON.toJSONString(message);
                 byte[] data = json.getBytes("UTF-8");
                 // 先发送消息体长度，4个字节
