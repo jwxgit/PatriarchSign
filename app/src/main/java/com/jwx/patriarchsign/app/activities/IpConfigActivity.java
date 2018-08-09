@@ -28,6 +28,12 @@ import org.xutils.x;
 public class IpConfigActivity extends BaseActivity {
     @ViewInject(R.id.ip_et)
     private EditText mIpEt;
+    @ViewInject(R.id.ip_et2)
+    private EditText mIpEt2;
+    @ViewInject(R.id.ip_et3)
+    private EditText mIpEt3;
+    @ViewInject(R.id.ip_et4)
+    private EditText mIpEt4;
     @ViewInject(R.id.port_et)
     private EditText mPortEt;
     @ViewInject(R.id.root_layout)
@@ -66,13 +72,19 @@ public class IpConfigActivity extends BaseActivity {
                 + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
                 + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
                 + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)$";
+
+        //获取IP地址
         String ipText = mIpEt.getText().toString().trim();
+        String ipText2 = mIpEt2.getText().toString().trim();
+        String ipText3 = mIpEt3.getText().toString().trim();
+        String ipText4 = mIpEt4.getText().toString().trim();
         String portText = mPortEt.getText().toString().trim();
-        if (TextUtils.isEmpty(ipText)) {
+        String iPAddress = ipText + '.' + ipText2 + '.' + ipText3 + '.' + ipText4;
+        if (TextUtils.isEmpty(ipText) || TextUtils.isEmpty(ipText2) || TextUtils.isEmpty(ipText3) || TextUtils.isEmpty(ipText4)) {
             Toast.makeText(this, "IP地址不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (!ipText.matches(s)) {
+        if (!iPAddress.matches(s)) {
             Toast.makeText(this, "IP地址不合法", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -80,11 +92,11 @@ public class IpConfigActivity extends BaseActivity {
             Toast.makeText(this, "端口号不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        SpUtils.putString(Constances.SP_KEY_ID_ADDRESS, ipText);
+        SpUtils.putString(Constances.SP_KEY_ID_ADDRESS, iPAddress);
         SpUtils.putString(Constances.SP_KEY_PORT, portText);
         SpUtils.commite();
         Interface.updateBaseUrl();//更新IP 和 端口
-        Intent intent = new Intent(this, DoctorInfoActivity.class);
+        Intent intent = new Intent(this, ReadAgreement.class);
         startActivity(intent);
     }
 }

@@ -39,6 +39,12 @@
             android:name=".app.activities.IpConfigActivity"
             android:screenOrientation="landscape"/>
         <activity
+            android:name=".app.activities.ReadAgreement"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".app.activities.InfoConfirmation"
+            android:screenOrientation="landscape"/>
+        <activity
             android:name=".app.activities.DoctorInfoActivity"
             android:screenOrientation="landscape"/>
         <activity

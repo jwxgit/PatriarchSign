@@ -79,7 +79,7 @@ public abstract class SocketTransceiver implements Runnable {
     public boolean send(SocketMessage message) {
         if (out != null) {
             try {
-                out.write(1);
+                out = new BufferedOutputStream(socket.getOutputStream(), 1024 * 200);
                 String json = JSON.toJSONString(message);
                 byte[] data = json.getBytes("UTF-8");
                 // 先发送消息体长度，4个字节
@@ -112,27 +112,22 @@ public abstract class SocketTransceiver implements Runnable {
             try {
                 // 这里面要注意防止死循环
                 //断开连接时读取到的数据为 -1，先判断是否断开连接
-                int offset = 0, eachRead = 0;
+                int offset = 0;
                 // 先读取第一个包，取出消息体长度,4个字节
                 byte[] data = new byte[4];
-                int signal = in.read();
-                if (signal == -1) break;
                 while (offset < data.length) {
-                    eachRead = in.read(data, offset, data.length - offset);
-                    if (eachRead == -1)
-                        throw new RuntimeException("连接已断开");
-                    offset += eachRead;
+                    if (in.read() == -1)
+                        throw new RuntimeException("连接已断开......");
+                    offset += in.read(data, offset, data.length - offset);
                 }
                 int msgLength = FileUtils.byteArrayToInt(data);
                 // 再读取消息体
                 offset = 0;
-                eachRead = 0;
                 data = new byte[msgLength];
                 while (offset < msgLength) {
-                    eachRead = in.read(data, offset, msgLength - offset);
-                    if (eachRead == -1)
-                        throw new RuntimeException("连接已断开");
-                    offset += eachRead;
+                    if (in.read() == -1)
+                        throw new RuntimeException("连接已断开......");
+                    offset += in.read(data, offset, msgLength - offset);
                 }
                 this.onReceive(addr, JSON.parseObject(new String(data, "UTF-8"), SocketMessage.class));
             } catch (Exception e) {

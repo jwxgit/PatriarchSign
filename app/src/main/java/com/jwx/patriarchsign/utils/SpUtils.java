@@ -122,6 +122,7 @@ public class SpUtils {
             editor = mSp.edit();
         }
         editor.clear();
+        editor.commit();
     }
 
     /**
