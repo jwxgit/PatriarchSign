@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (null == client) {
+                if (null == client || !client.isConnected()) {
                     UIHandler uiHandler = new DefaultUIHandler();
                     client = new DefaultSocketClient(uiHandler);
                     uiHandler.setSocketClient(client);
