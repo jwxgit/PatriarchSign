@@ -53,12 +53,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (null == client || !client.isConnected()) {
-                    UIHandler uiHandler = new DefaultUIHandler();
-                    client = new DefaultSocketClient(uiHandler);
-                    uiHandler.setSocketClient(client);
-                    client.connect("116.7.236.130", 20021);
+                    try {
+                        //
+                        System.out.println("断线重连.....");
+                        UIHandler uiHandler = new DefaultUIHandler();
+                        client = new DefaultSocketClient(uiHandler);
+                        uiHandler.setSocketClient(client);
+                        client.connect("116.7.236.130", 20021);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-
             }
         }, 0, 10000);
 
