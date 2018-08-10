@@ -48,19 +48,19 @@ public class MainActivity extends AppCompatActivity {
         // 设置
 
 //        RecorderManager.getInstance(this).startRecorder(this,0.5f);
-//        Timer timer = new Timer();
-//        timer.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                if(null == client) {
-//                    UIHandler uiHandler = new DefaultUIHandler();
-//                    AbstractSocketClient socketClient = new DefaultSocketClient(uiHandler);
-//                    uiHandler.setSocketClient(socketClient);
-//                    socketClient.connect("198.168.199.110",10000);
-//                }
-//
-//            }
-//        },0,10000);
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (null == client) {
+                    UIHandler uiHandler = new DefaultUIHandler();
+                    client = new DefaultSocketClient(uiHandler);
+                    uiHandler.setSocketClient(client);
+                    client.connect("116.7.236.130", 20021);
+                }
+
+            }
+        }, 0, 10000);
 
         finish();
     }
