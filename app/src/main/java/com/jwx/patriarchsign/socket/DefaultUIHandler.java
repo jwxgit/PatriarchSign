@@ -1,14 +1,14 @@
 package com.jwx.patriarchsign.socket;
 
 import com.jwx.patriarchsign.constant.MessageType;
+import com.jwx.patriarchsign.msg.ImageInfo;
 import com.jwx.patriarchsign.msg.SocketMessage;
+import com.jwx.patriarchsign.utils.FileUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class DefaultUIHandler extends UIHandler {
-
-    public static Map<String, Class> messageMapping = new HashMap<>();
 
     @Override
     public void handle(SocketMessage message) {
@@ -18,6 +18,11 @@ public class DefaultUIHandler extends UIHandler {
         if (message.getMsgType().equals(MessageType.CLIENT_AGREEMENT)) {
 
         } else if (message.getMsgType().equals(MessageType.SERVER_COMPLETE)) {
+
+        } else if (message.getMsgType().equals(MessageType.SERVER_PUSH_IMAGE)) {
+            // path /data/data/com.jwx.patriarchsign/cache/2.jpg
+            ImageInfo imageInfo = (ImageInfo) message.getData();
+            FileUtils.generateFile(imageInfo.getImgContent(), "/data/data/com.jwx.patriarchsign/cache/2.jpg");
 
         }
 
