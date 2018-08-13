@@ -39,7 +39,7 @@ android {
 //            keyPassword "debug2017"
 //        }
         release {// 自己的签名文件
-            storeFile file("D:\\Developement\\keystore\\release\\jwx.jks")
+            storeFile file("/work/android/keystore/release/jwx.jks")
             storePassword "jwx2017"
             keyAlias "jwx"
             keyPassword "jwx2017"
