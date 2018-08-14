@@ -1,12 +1,15 @@
 package com.jwx.patriarchsign.app.activities;
 
 
+import android.Manifest;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -18,9 +21,13 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.jwx.patriarchsign.R;
+import com.jwx.patriarchsign.utils.ToastUtils;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionListener;
 
 
 import java.util.ArrayList;
@@ -28,6 +35,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class InfoConfirmation extends BaseActivity {
+    private static final int CODE_IMG_FACE   = 0;
+    private static final int CODE_IMG_SIGN   = 1;
+    private static final int CODE_IMG_FINGER = 2;
     private TextView tName, tSex, tBirthDay;
     private TableLayout mTableLayout;
     private ImageView signature, photograph, fingerprint;
@@ -57,14 +67,66 @@ public class InfoConfirmation extends BaseActivity {
         tName.setText(String.valueOf("张三s"));
         mTableLayout.setStretchAllColumns(true);
 
+        photograph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("2222222","2" + v);
+                changePhoto(null);
+            }
+        });
+
         signature.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("","222:" + v);
+                Log.d("445555","2" + v);
+                changeSign(null);
             }
         });
+
+        fingerprint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("8888","2" + v);
+                changeFinger(null);
+            }
+        });
+
     }
 
+    //拍照
+    public void changePhoto(View view) {
+        PermissionListener listener = new PermissionListener() {
+            @Override
+            public void onSucceed(int requestCode, List<String> grantedPermissions) {
+                // Successfully.
+                if (requestCode == 200) {
+                    Intent intent = new Intent(InfoConfirmation.this, FaceCollectionActivity.class);
+                    startActivityForResult(intent, CODE_IMG_FACE);
+                }
+            }
+
+            @Override
+            public void onFailed(int requestCode, List<String> deniedPermissions) {
+                // Failure.
+                if (requestCode == 200) {
+                    ToastUtils.showMessageShort("请允许相机权限哦！");
+                }
+            }
+        };
+        AndPermission.with(this).requestCode(200).permission(Manifest.permission.CAMERA).callback(listener).start();
+    }
+
+    //签名
+    public void changeSign(View view) {
+        Intent intent = new Intent(this, SignCollectActivity.class);
+        startActivityForResult(intent, CODE_IMG_SIGN);
+    }
+
+    //指纹
+    public void changeFinger(View view) {
+        Intent intent = new Intent(this, FingerCollectActivity.class);
+        startActivityForResult(intent, CODE_IMG_FINGER);
+    }
 
     @Override
     public void back(View view) {
@@ -72,8 +134,9 @@ public class InfoConfirmation extends BaseActivity {
     }
 
 
-    public void  imageViewStep(View v){
-        Log.e("","3333:" + v);
+    public void  imageViewStep(View view){
+        Log.e("","3333:" + view);
+        Toast.makeText(this, "view", Toast.LENGTH_SHORT).show();
     }
 
     public void addTableView() {

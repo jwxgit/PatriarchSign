@@ -7,6 +7,10 @@ package com.jwx.patriarchsign.data.constants;
 public interface Constances {
     //Sp keys
     String SP_KEY_ID_ADDRESS     = "sp_key_id_address";
+    String SP_KEY_ID_ADDRESS1     = "sp_key_id_address1";
+    String SP_KEY_ID_ADDRESS2     = "sp_key_id_address2";
+    String SP_KEY_ID_ADDRESS3     = "sp_key_id_address3";
+    String SP_KEY_ID_ADDRESS4     = "sp_key_id_address4";
     String SP_KEY_PORT           = "sp_key_port";
     String SP_KEY_WORKBENCH_ID   = "sp_key_workbench_id";//接种台ID
     String SP_KEY_WORKBENCH_NAME = "sp_key_workbench_name";//接种台名称

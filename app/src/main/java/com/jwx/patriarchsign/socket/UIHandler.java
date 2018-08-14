@@ -2,7 +2,7 @@ package com.jwx.patriarchsign.socket;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jwx.patriarchsign.constant.MessageType;
-import com.jwx.patriarchsign.msg.Aggrement;
+import com.jwx.patriarchsign.msg.Agreement;
 import com.jwx.patriarchsign.msg.ChildInfo;
 import com.jwx.patriarchsign.msg.Completion;
 import com.jwx.patriarchsign.msg.ImageInfo;
@@ -21,7 +21,7 @@ public abstract class UIHandler {
     // TODO
     static {
         // 将消息类型和对应的实体进行绑定，用于接收消息时自动反序列化
-        messageMapping.put(MessageType.CLIENT_AGREEMENT, Aggrement.class);
+        messageMapping.put(MessageType.CLIENT_AGREEMENT, Agreement.class);
         messageMapping.put(MessageType.SERVER_SIGNATURE_START, ChildInfo.class);
         messageMapping.put(MessageType.CLIENT_GET_CONSENT_FORM, ImageInfo.class);
         messageMapping.put(MessageType.SERVER_PUSH_IMAGE, ImageInfo.class);

@@ -280,9 +280,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:onClick="imageViewStep"
-                android:contextClickable="true"
-                android:clickable="true"
                 android:background="@drawable/full_line"
                 android:padding="@dimen/w10"
                 app:srcCompat="@mipmap/sign_loading_holder" />
@@ -293,8 +290,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:clickable="true"
-                android:onClick="imageViewStep"
                 android:background="@drawable/full_line"
                 android:padding="15dp"
                 app:srcCompat="@drawable/doctor_img_holder" />
@@ -304,9 +299,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:clickable="true"
-                android:onClick="imageViewStep"
-                android:contextClickable="true"
                 android:background="@drawable/full_line"
                 android:padding="@dimen/w10"
                 app:srcCompat="@mipmap/finger" />

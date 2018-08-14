@@ -1,7 +1,12 @@
 package com.jwx.patriarchsign.socket;
 
+import android.widget.Toast;
+
 import com.alibaba.fastjson.JSON;
 import com.jwx.patriarchsign.msg.SocketMessage;
+
+import static com.jwx.patriarchsign.utils.UIUtil.getContext;
+
 
 /**
  * TCP Socket客户端
@@ -19,6 +24,7 @@ public class DefaultSocketClient extends AbstractSocketClient {
     @Override
     public void onConnect(SocketTransceiver transceiver) {
         System.out.println("已连接到服务端......");
+        //Toast.makeText(getContext(), "已连接到服务端", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -36,5 +42,6 @@ public class DefaultSocketClient extends AbstractSocketClient {
     public void onDisconnect(SocketTransceiver transceiver) {
         System.out.println("与服务端断开了连接.....");
     }
+
 
 }

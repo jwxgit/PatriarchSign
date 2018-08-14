@@ -63,7 +63,10 @@ public class IpConfigActivity extends BaseActivity {
                 return false;
             }
         });
-        mIpEt.setText(SpUtils.getString(Constances.SP_KEY_ID_ADDRESS, ""));
+        mIpEt.setText(SpUtils.getString(Constances.SP_KEY_ID_ADDRESS1, ""));
+        mIpEt2.setText(SpUtils.getString(Constances.SP_KEY_ID_ADDRESS2, ""));
+        mIpEt3.setText(SpUtils.getString(Constances.SP_KEY_ID_ADDRESS3, ""));
+        mIpEt4.setText(SpUtils.getString(Constances.SP_KEY_ID_ADDRESS4, ""));
         mPortEt.setText(SpUtils.getString(Constances.SP_KEY_PORT, ""));
     }
 
@@ -92,11 +95,19 @@ public class IpConfigActivity extends BaseActivity {
             Toast.makeText(this, "端口号不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
+        //拼好的IP
         SpUtils.putString(Constances.SP_KEY_ID_ADDRESS, iPAddress);
+        //IP段
+        SpUtils.putString(Constances.SP_KEY_ID_ADDRESS1, ipText);
+        SpUtils.putString(Constances.SP_KEY_ID_ADDRESS2, ipText2);
+        SpUtils.putString(Constances.SP_KEY_ID_ADDRESS3, ipText3);
+        SpUtils.putString(Constances.SP_KEY_ID_ADDRESS4, ipText4);
         SpUtils.putString(Constances.SP_KEY_PORT, portText);
         SpUtils.commite();
-        Interface.updateBaseUrl();//更新IP 和 端口
+        //更新IP 和 端口
+        Interface.updateBaseUrl();
         Intent intent = new Intent(this, ReadAgreement.class);
         startActivity(intent);
+
     }
 }
