@@ -45,10 +45,11 @@ public class IndexActivity extends BaseActivity {
     }
 
     private void initView() {
-        setContentView(R.layout.activity_index);
+        setContentView(R.layout.wait_for);
         x.view().inject(this);
-        mWorkBenchId = SpUtils.getInt(Constances.SP_KEY_WORKBENCH_ID, -1);
-        initWebView();
+        //mWorkBenchId = SpUtils.getInt(Constances.SP_KEY_WORKBENCH_ID, -1);
+        //initWebView();
+
     }
 
 
