@@ -40,10 +40,10 @@
             android:name=".app.activities.IpConfigActivity"
             android:screenOrientation="landscape"/>
         <activity
-            android:name=".app.activities.ReadAgreement"
+            android:name=".app.activities.ReadAgreementActivity"
             android:screenOrientation="landscape"/>
         <activity
-            android:name=".app.activities.InfoConfirmation"
+            android:name=".app.activities.InfoConfirmationActivity"
             android:screenOrientation="landscape"/>
         <activity
             android:name=".app.activities.DoctorInfoActivity"

@@ -106,7 +106,7 @@ public class IpConfigActivity extends BaseActivity {
         SpUtils.commite();
         //更新IP 和 端口
         Interface.updateBaseUrl();
-        Intent intent = new Intent(this, ReadAgreement.class);
+        Intent intent = new Intent(this, ReadAgreementActivity.class);
         startActivity(intent);
 
     }

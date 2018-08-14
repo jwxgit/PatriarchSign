@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jwx.patriarchsign.R;
-import com.jwx.patriarchsign.app.activities.ReadAgreement;
+
 
 import java.util.List;
 

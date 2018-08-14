@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class InfoConfirmation extends BaseActivity {
+public class InfoConfirmationActivity extends BaseActivity {
     private static final int CODE_IMG_FACE   = 0;
     private static final int CODE_IMG_SIGN   = 1;
     private static final int CODE_IMG_FINGER = 2;
@@ -100,7 +100,7 @@ public class InfoConfirmation extends BaseActivity {
             public void onSucceed(int requestCode, List<String> grantedPermissions) {
                 // Successfully.
                 if (requestCode == 200) {
-                    Intent intent = new Intent(InfoConfirmation.this, FaceCollectionActivity.class);
+                    Intent intent = new Intent(InfoConfirmationActivity.this, FaceCollectionActivity.class);
                     startActivityForResult(intent, CODE_IMG_FACE);
                 }
             }

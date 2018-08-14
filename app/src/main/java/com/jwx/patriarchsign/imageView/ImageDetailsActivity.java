@@ -41,13 +41,13 @@ public class ImageDetailsActivity extends Activity implements OnPageChangeListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_agreement);
+        setContentView(R.layout.image_activity_main);
         int imagePosition = getIntent().getIntExtra("image_position", 0);
         //pageText = (TextView) findViewById(R.id.page_text);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager = (ViewPager) findViewById(R.id.vp);
         ViewPagerAdapter adapter = new ViewPagerAdapter();
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(imagePosition);
+        viewPager.setCurrentItem(0);
         viewPager.setOnPageChangeListener(this);
         viewPager.setEnabled(false);
         // 设定当前的页数和总页数
