@@ -15,13 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jwx.patriarchsign.R;
@@ -30,8 +28,11 @@ import com.jwx.patriarchsign.imageView.ImageViewPager;
 import com.jwx.patriarchsign.imageView.Images;
 import com.jwx.patriarchsign.imageView.ZoomImageView;
 import com.jwx.patriarchsign.msg.Agreement;
+import com.jwx.patriarchsign.msg.ChildInfo;
+import com.jwx.patriarchsign.msg.MessageFactory;
+import com.jwx.patriarchsign.msg.SocketMessage;
+import com.jwx.patriarchsign.netty.NettyClient;
 import com.jwx.patriarchsign.utils.ToastUtils;
-import com.jwx.patriarchsign.viewpage.MyPagerAdapter;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 
@@ -44,6 +45,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class ReadAgreementActivity extends BaseActivity {
@@ -56,7 +58,9 @@ public class ReadAgreementActivity extends BaseActivity {
     private ImageLoader imageLoader = ImageLoader.getInstance();  //获取图片进行管理的工具类实例。
     private ArrayList<View> viewList;
 
-
+/*
+    private  ChildInfo  childInfo;
+*/
     static int Position;
     static List<String> list = new ArrayList<>();
 
@@ -66,7 +70,11 @@ public class ReadAgreementActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_agreement);
-
+/*
+        childInfo=getIntent().getParcelableExtra("childInfo");
+*/
+        //发送下载
+        requestImg();
         for (int i = 0; i < 10; i++) {
             list.add("第" + i + "个协议图片");
         }
@@ -106,8 +114,6 @@ public class ReadAgreementActivity extends BaseActivity {
             }
 
         };
-
-
         //setVp();
         //listView.setAdapter(adapter);
         PermissionListener listener = new PermissionListener() {
@@ -129,6 +135,12 @@ public class ReadAgreementActivity extends BaseActivity {
         };
         AndPermission.with(this).requestCode(200).permission(Manifest.permission.WRITE_EXTERNAL_STORAGE).callback(listener).start();
 
+    }
+
+    private void requestImg() {
+        String uuid = UUID.randomUUID().toString();
+        SocketMessage message = MessageFactory.ClientMessages.getClientGetConsentFormMessage(uuid);
+        NettyClient.sendMessage(message);
     }
 
 
@@ -201,6 +213,7 @@ public class ReadAgreementActivity extends BaseActivity {
         if(mCheckBox.isChecked()){
             Agreement agg = new Agreement();
             agg.setAgree(1);
+            sendAgreement(1);
             Intent intent = new Intent(this, InfoConfirmationActivity.class);
             startActivity(intent);
         }else{
@@ -208,9 +221,17 @@ public class ReadAgreementActivity extends BaseActivity {
         }
     }
 
+    private  void  sendAgreement(int agree){
+        SocketMessage  message = MessageFactory.ClientMessages.getClientAgreementMessage(1);
+        NettyClient.sendMessage(message);
+    }
+
     //取消 跳转到待机画面
     public void disagreeStep(View view){
         Intent intent = new Intent(this, IndexActivity.class);
+/*
+        intent.putExtra("childInfo",childInfo);
+*/
         startActivity(intent);
     }
 
@@ -321,7 +342,7 @@ public class ReadAgreementActivity extends BaseActivity {
             }
             View view = LayoutInflater.from(ReadAgreementActivity.this).inflate(R.layout.zoom_image_layout, null);
             ZoomImageView zoomImageView = (ZoomImageView) view.findViewById(R.id.zoom_image_view);
-            Log.e("test====================", ""+ bitmap);
+        /*    Log.e("test====================", ""+ bitmap);*/
             zoomImageView.setImageBitmap(bitmap);
             container.addView(view);
             return view;

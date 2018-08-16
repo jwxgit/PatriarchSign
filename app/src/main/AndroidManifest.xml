@@ -74,6 +74,8 @@
 
         <activity android:name=".app.activities.UserLicenseActivity">
         </activity>
+
+        <service android:name="com.jwx.patriarchsign.netservice.SocketService"/>
     </application>
 
 </manifest>

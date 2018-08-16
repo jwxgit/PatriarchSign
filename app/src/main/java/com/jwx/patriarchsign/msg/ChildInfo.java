@@ -1,12 +1,13 @@
 package com.jwx.patriarchsign.msg;
 
+import java.io.Serializable;
 import java.util.List;
 
 /*
  * @description 儿童接种信息
  * @author wurenqing
  */
-public class ChildInfo extends BaseInfo {
+public class ChildInfo extends BaseInfo implements Serializable {
 
     /*
      * 工作台名称

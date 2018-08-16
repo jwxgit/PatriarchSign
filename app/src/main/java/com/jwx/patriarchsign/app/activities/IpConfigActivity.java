@@ -105,8 +105,8 @@ public class IpConfigActivity extends BaseActivity {
         SpUtils.putString(Constances.SP_KEY_PORT, portText);
         SpUtils.commite();
         //更新IP 和 端口
-        Interface.updateBaseUrl();
-        Intent intent = new Intent(this, ReadAgreementActivity.class);
+      //  Interface.updateBaseUrl();
+        Intent intent = new Intent(this, IndexActivity.class);
         startActivity(intent);
 
     }

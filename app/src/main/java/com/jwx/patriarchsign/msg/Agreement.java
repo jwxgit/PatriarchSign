@@ -5,6 +5,7 @@ package com.jwx.patriarchsign.msg;
  * @author wurenqing
  */
 public class Agreement extends BaseInfo {
+
     private int agree;
 
     public int getAgree() {

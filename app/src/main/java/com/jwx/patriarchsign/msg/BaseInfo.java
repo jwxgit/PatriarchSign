@@ -1,6 +1,8 @@
 package com.jwx.patriarchsign.msg;
 
-public class BaseInfo {
+import java.io.Serializable;
+
+public class BaseInfo  implements Serializable{
 
     /*
      * 儿童编码
