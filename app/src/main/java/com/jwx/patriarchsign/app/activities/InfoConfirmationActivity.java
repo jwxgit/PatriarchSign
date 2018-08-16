@@ -25,6 +25,12 @@ import android.widget.Toast;
 
 
 import com.jwx.patriarchsign.R;
+import com.jwx.patriarchsign.constant.MessageType;
+import com.jwx.patriarchsign.msg.ChildInfo;
+import com.jwx.patriarchsign.msg.Command;
+import com.jwx.patriarchsign.msg.SocketMessage;
+import com.jwx.patriarchsign.netty.MessageLisener;
+import com.jwx.patriarchsign.netty.MessageLisenerRegister;
 import com.jwx.patriarchsign.utils.ToastUtils;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
@@ -42,7 +48,7 @@ public class InfoConfirmationActivity extends BaseActivity {
     private TableLayout mTableLayout;
     private ImageView signature, photograph, fingerprint;
     private List list = new ArrayList();
-
+    private ChildInfo  childInfo;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,18 +59,57 @@ public class InfoConfirmationActivity extends BaseActivity {
         tBirthDay = (TextView) findViewById(R.id.birthDay);
         mTableLayout = (TableLayout) findViewById(R.id.TableLayout);
 
+
+        childInfo=getIntent().getParcelableExtra("childInfo");
+        //addTableView();
+        initMessageLisener();
+        System.out.println(123);
         signature = (ImageView) findViewById(R.id.signature);
         photograph = (ImageView) findViewById(R.id.photograph);
         fingerprint = (ImageView) findViewById(R.id.fingerprint);
-
         initView();
-        //addTableView();
+
+    }
+
+    private void initMessageLisener() {
+        MessageLisenerRegister.registMessageLisener(MessageType.SERVER_DO_SIGNATURE, new MessageLisener() {
+            @Override
+            public void onMessage(SocketMessage message) {
+                Object data  = message.getData();
+                if(data instanceof Command){
+                    Command comman = (Command)data;
+                  switch (comman.getOperation()){
+                      case "010":
+                            changeSign(null);
+                            break;
+                      case "020":
+                          changeFinger(null);
+                             break;
+                      case "030":
+                            changePhoto(null);
+                            break;
+                      default:
+                          System.out.println("no such operation！");
+                  }
+                }
+            }
+        });
     }
 
 
     private void initView() {
 
-        tName.setText(String.valueOf("张三s"));
+        if(childInfo==null){
+            //异常提示， 返回待机页面
+        }
+
+        tName.setText(String.valueOf(childInfo.getChilName()));
+        tBirthDay.setText(childInfo.getChilBirthday());
+
+        tSex.setText(childInfo.getChilSex());
+
+        //初始化表格数据
+
         mTableLayout.setStretchAllColumns(true);
 
         photograph.setOnClickListener(new View.OnClickListener() {

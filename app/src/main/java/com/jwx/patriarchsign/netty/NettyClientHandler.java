@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.jwx.patriarchsign.constant.MessageType;
 import com.jwx.patriarchsign.msg.Agreement;
 import com.jwx.patriarchsign.msg.ChildInfo;
+import com.jwx.patriarchsign.msg.Command;
 import com.jwx.patriarchsign.msg.Completion;
 import com.jwx.patriarchsign.msg.ImageInfo;
 import com.jwx.patriarchsign.msg.SignImage;
@@ -31,7 +32,7 @@ public class NettyClientHandler extends SimpleChannelInboundHandler {
         messageMapping.put(MessageType.SERVER_SIGNATURE_START, ChildInfo.class);
         messageMapping.put(MessageType.CLIENT_GET_CONSENT_FORM, ImageInfo.class);
         messageMapping.put(MessageType.SERVER_PUSH_IMAGE, ImageInfo.class);
-        messageMapping.put(MessageType.SERVER_DO_SIGNATURE, SignImage.class);
+        messageMapping.put(MessageType.SERVER_DO_SIGNATURE, Command.class);
         messageMapping.put(MessageType.CLIENT_UPLOAD_IMG, Completion.class);
         messageMapping.put(MessageType.SERVER_SIGNATURE_CANCEL, Completion.class);
         messageMapping.put(MessageType.SERVER_COMPLETE, Completion.class);

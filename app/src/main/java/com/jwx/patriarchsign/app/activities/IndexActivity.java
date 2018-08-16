@@ -63,7 +63,9 @@ public class IndexActivity extends BaseActivity {
                  Object obj=message.getData();
                 if(obj instanceof  ChildInfo) {
                     ChildInfo childInfo= (ChildInfo)obj;
+/*
                     String [] imgIds  =  childInfo.getHealthModels();
+*/
                     Intent   intent = new Intent(IndexActivity.this, ReadAgreementActivity.class);
                     intent.putExtra("childInfo",(Serializable) childInfo);
                     startActivity(intent);

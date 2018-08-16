@@ -41,6 +41,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -58,9 +59,7 @@ public class ReadAgreementActivity extends BaseActivity {
     private ImageLoader imageLoader = ImageLoader.getInstance();  //获取图片进行管理的工具类实例。
     private ArrayList<View> viewList;
 
-/*
     private  ChildInfo  childInfo;
-*/
     static int Position;
     static List<String> list = new ArrayList<>();
 
@@ -70,15 +69,11 @@ public class ReadAgreementActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_agreement);
-/*
         childInfo=getIntent().getParcelableExtra("childInfo");
-*/
         //发送下载
-        requestImg();
         for (int i = 0; i < 10; i++) {
             list.add("第" + i + "个协议图片");
         }
-
         listView = (ListView) findViewById(R.id.listView);
         vp = (ViewPager) findViewById(R.id.vp);
         mCheckBox = (CheckBox) findViewById(R.id.checkBox);
@@ -137,11 +132,6 @@ public class ReadAgreementActivity extends BaseActivity {
 
     }
 
-    private void requestImg() {
-        String uuid = UUID.randomUUID().toString();
-        SocketMessage message = MessageFactory.ClientMessages.getClientGetConsentFormMessage(uuid);
-        NettyClient.sendMessage(message);
-    }
 
 
     private void setVp() {
@@ -215,6 +205,7 @@ public class ReadAgreementActivity extends BaseActivity {
             agg.setAgree(1);
             sendAgreement(1);
             Intent intent = new Intent(this, InfoConfirmationActivity.class);
+            intent.putExtra("childInfo",(Serializable) childInfo);
             startActivity(intent);
         }else{
             Toast.makeText(this, "请勾选我已阅读", Toast.LENGTH_SHORT).show();
