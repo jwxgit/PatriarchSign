@@ -1,9 +1,11 @@
 package com.jwx.patriarchsign.msg;
 
+import java.io.Serializable;
+
 /*
  * 接种信息
  */
-public class Inoculation {
+public class Inoculation implements Serializable {
     /*
      * 疫苗编码
      */

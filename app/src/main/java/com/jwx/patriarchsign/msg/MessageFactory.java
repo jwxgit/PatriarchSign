@@ -1,7 +1,11 @@
 package com.jwx.patriarchsign.msg;
 
 
+import android.graphics.Bitmap;
+import android.util.Base64;
+
 import com.jwx.patriarchsign.constant.MessageType;
+import com.jwx.patriarchsign.utils.BitmapUtils;
 import com.jwx.patriarchsign.utils.DateUtil;
 import com.jwx.patriarchsign.utils.ImageUtils;
 import com.jwx.patriarchsign.utils.Md5Utils;
@@ -21,26 +25,24 @@ public class MessageFactory {
          *
          * @return
          */
-        public static SocketMessage getClientSignMessage(String fileName) {
-            if(fileName==null){
-                fileName = "0101.jpg";
-            }
+        public static SocketMessage getClientSignMessage(byte[] bmp) {
+            String fileName = "sign.jpg";
             int imgType = 1;
-            return getMutilClientMessage(fileName, MessageType.CLIENT_UPLOAD_IMG , imgType);
+            return getMutilClientMessage(bmp, fileName, MessageType.CLIENT_UPLOAD_IMG, imgType);
         }
-        public static SocketMessage getClientSignMessage( ) {
-            return getClientSignMessage("0101.jpg");
-        }
+//        public static SocketMessage getClientSignMessage() {
+//            return getClientSignMessage("0101.jpg");
+//        }
 
         /**
          * 获取指纹消息测试消息
          *
          * @return
          */
-        public static SocketMessage getClienteFignerPrintMessag() {
+        public static SocketMessage getClienteFignerPrintMessag(byte[] bmp) {
             String fileName = "finger.jpg";
             int imgType = 2;
-            return getMutilClientMessage(fileName, MessageType.CLIENT_UPLOAD_IMG, imgType);
+            return getMutilClientMessage(bmp, fileName, MessageType.CLIENT_UPLOAD_IMG, imgType);
         }
 
         /**
@@ -48,10 +50,10 @@ public class MessageFactory {
          *
          * @return
          */
-        public static SocketMessage getClientFacePictureMessage() {
+        public static SocketMessage getClientFacePictureMessage(byte[] bmp) {
             String fileName = "picture.jpg";
             int imgType = 3;
-            return getMutilClientMessage(fileName, MessageType.CLIENT_UPLOAD_IMG , imgType);
+            return getMutilClientMessage(bmp, fileName, MessageType.CLIENT_UPLOAD_IMG, imgType);
         }
 
         /**
@@ -59,10 +61,10 @@ public class MessageFactory {
          *
          * @return
          */
-        public static SocketMessage getClientDestTopSnapShotMessage() {
+        public static SocketMessage getClientDestTopSnapShotMessage(byte[] bmp) {
             String fileName = "desktop.jpg";
             int imgType = 4;
-            return getMutilClientMessage(fileName, MessageType.CLIENT_UPLOAD_IMG, imgType);
+            return getMutilClientMessage(bmp, fileName, MessageType.CLIENT_UPLOAD_IMG, imgType);
         }
 
         /**
@@ -111,21 +113,19 @@ public class MessageFactory {
      * @param imgType      --1签字图像/2指纹图像/3拍照图像/4摄像头图片
      * @return
      */
-    private    static  SocketMessage  getMutilClientMessage(String fileName ,String msgType, int imgType){
+    private static SocketMessage getMutilClientMessage(byte[] bmp, String fileName, String msgType, int imgType) {
         SocketMessage message = new SocketMessage();
         message.setMsgId(UUID.randomUUID().toString());
         String dateStr =  DateUtil.dateToString(new Date(),DateUtil.YEAR_TO_MINSECOND);
         message.setMsgTimestamp(dateStr);
         message.setMsgType(msgType);
-
         SignImage  signImage = new SignImage();
-        signImage.setImgName(fileName);
+        signImage.setImgName("");
         signImage.setImgType(imgType);
-        String  fileBase64 =  ImageUtils.fileToBase64(ImageUtils.getFile(fileName));
-        signImage.setImgContent(fileBase64);
+        String bmpStr = Base64.encodeToString(bmp, Base64.DEFAULT);
+        signImage.setImgContent(bmpStr);
         signImage.setChilCode(UUID.randomUUID().toString());
-
-        String msgMd5 =  Md5Utils.string2MD5(dateStr+fileBase64);
+        String msgMd5 = Md5Utils.string2MD5(dateStr + bmpStr);
         message.setMsgMd5(msgMd5);
         message.setData(signImage);
         return  message;

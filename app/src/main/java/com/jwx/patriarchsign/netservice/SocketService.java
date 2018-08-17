@@ -33,7 +33,7 @@ public class SocketService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
            Logger.getLogger(SocketService.class.getName()).info("socket服务启动");
           //获取监听不断监听服务端消息，只要客户端不退出的情况下，始终保持连接
-           nettyClient =  new  NettyClient(9999,"192.168.199.69");
+        nettyClient = new NettyClient(9999, "192.168.199.112");
            return super.onStartCommand(intent, flags, startId);
     }
 

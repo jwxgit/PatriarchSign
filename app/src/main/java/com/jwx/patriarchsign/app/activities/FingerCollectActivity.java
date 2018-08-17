@@ -143,10 +143,11 @@ public class FingerCollectActivity extends BaseActivity {
         if (mFingerBmp == null)
             return;
         if (mParentInfo == null) {
-            Bundle bundle = new Bundle();
-            bundle.putByteArray("bmp", BitmapUtils.Bitmap2Bytes(mFingerBmp));
+//            Bundle bundle = new Bundle();
+//            bundle.putByteArray("bmp", BitmapUtils.Bitmap2Bytes(mFingerBmp));
             Intent intent = new Intent();
-            intent.putExtras(bundle);
+//            intent.putExtras(bundle);
+            intent.putExtra("fingerBmp", BitmapUtils.Bitmap2Bytes(mFingerBmp));
             setResult(RESULT_OK, intent);
             finish();
         } else {
@@ -237,6 +238,12 @@ public class FingerCollectActivity extends BaseActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 view.setVisibility(View.INVISIBLE);
+                if (null != mFingerBmp) {
+                    Intent intent = new Intent();
+                    intent.putExtra("fingerBmp", BitmapUtils.Bitmap2Bytes(mFingerBmp));
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
             }
 
             @Override

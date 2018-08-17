@@ -28,9 +28,14 @@ import com.jwx.patriarchsign.R;
 import com.jwx.patriarchsign.constant.MessageType;
 import com.jwx.patriarchsign.msg.ChildInfo;
 import com.jwx.patriarchsign.msg.Command;
+import com.jwx.patriarchsign.msg.MessageFactory;
+import com.jwx.patriarchsign.msg.SignImage;
 import com.jwx.patriarchsign.msg.SocketMessage;
 import com.jwx.patriarchsign.netty.MessageLisener;
 import com.jwx.patriarchsign.netty.MessageLisenerRegister;
+import com.jwx.patriarchsign.netty.NettyClient;
+import com.jwx.patriarchsign.utils.BitmapUtils;
+import com.jwx.patriarchsign.utils.ImageUtils;
 import com.jwx.patriarchsign.utils.ToastUtils;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
@@ -39,6 +44,7 @@ import com.yanzhenjie.permission.PermissionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class InfoConfirmationActivity extends BaseActivity {
     private static final int CODE_IMG_FACE   = 0;
@@ -59,8 +65,7 @@ public class InfoConfirmationActivity extends BaseActivity {
         tBirthDay = (TextView) findViewById(R.id.birthDay);
         mTableLayout = (TableLayout) findViewById(R.id.TableLayout);
 
-
-        childInfo=getIntent().getParcelableExtra("childInfo");
+        childInfo = (ChildInfo) getIntent().getSerializableExtra("childInfo");
         //addTableView();
         initMessageLisener();
         System.out.println(123);
@@ -225,5 +230,28 @@ public class InfoConfirmationActivity extends BaseActivity {
             Log.e("table--", "table:" + tableRow);
             mTableLayout.addView(tableRow);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        byte[] fingerBmp = data.getByteArrayExtra("fingerBmp");
+        byte[] signBmp = data.getByteArrayExtra("signBmp");
+        byte[] photoBmp = data.getByteArrayExtra("photoBmp");
+        if (null != fingerBmp && fingerBmp.length > 0) {
+            fingerprint.setImageBitmap(BitmapUtils.getBitmapFromBytes(fingerBmp, null));
+            // 发送消息到服务端
+            SocketMessage socketMessage = MessageFactory.ClientMessages.getClienteFignerPrintMessag(fingerBmp);
+            NettyClient.sendMessage(socketMessage);
+        } else if (null != signBmp && signBmp.length > 0) {
+            signature.setImageBitmap(BitmapUtils.getBitmapFromBytes(signBmp, null));
+            SocketMessage socketMessage = MessageFactory.ClientMessages.getClientSignMessage(signBmp);
+            NettyClient.sendMessage(socketMessage);
+
+        } else if (null != photoBmp && photoBmp.length > 0) {
+            photograph.setImageBitmap(BitmapUtils.getBitmapFromBytes(photoBmp, null));
+            SocketMessage socketMessage = MessageFactory.ClientMessages.getClientFacePictureMessage(photoBmp);
+            NettyClient.sendMessage(socketMessage);
+        }
+        return;
     }
 }

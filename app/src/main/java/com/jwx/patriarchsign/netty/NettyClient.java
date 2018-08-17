@@ -80,7 +80,7 @@ public class NettyClient {
 
 
     public static void main(String[] args) throws InterruptedException {
-           NettyClient bootstrap = new NettyClient(9999, "192.168.199.69");
+        NettyClient bootstrap = new NettyClient(9999, "192.168.199.110");
            MessageLisenerRegister.registMessageLisener(MessageType.SERVER_SIGNATURE_START, new MessageLisener() {
                @Override
                public void onMessage(SocketMessage message) {

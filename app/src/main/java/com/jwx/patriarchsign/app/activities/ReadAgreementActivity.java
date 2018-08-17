@@ -69,7 +69,7 @@ public class ReadAgreementActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_agreement);
-        childInfo=getIntent().getParcelableExtra("childInfo");
+        childInfo = (ChildInfo) getIntent().getSerializableExtra("childInfo");
         //发送下载
         for (int i = 0; i < 10; i++) {
             list.add("第" + i + "个协议图片");

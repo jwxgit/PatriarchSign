@@ -7,7 +7,7 @@ import java.util.List;
  * @description 儿童接种信息
  * @author wurenqing
  */
-public class ChildInfo extends BaseInfo implements Serializable {
+public class ChildInfo extends BaseInfo {
 
     /*
      * 工作台名称
