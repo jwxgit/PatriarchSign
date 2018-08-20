@@ -59,7 +59,6 @@ public class ReadAgreementActivity extends BaseActivity {
     private ImageLoader imageLoader = ImageLoader.getInstance();  //获取图片进行管理的工具类实例。
     private ArrayList<View> viewList;
 
-    private  ChildInfo  childInfo;
     static int Position;
     static List<String> list = new ArrayList<>();
 
@@ -69,7 +68,6 @@ public class ReadAgreementActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_agreement);
-        childInfo = (ChildInfo) getIntent().getSerializableExtra("childInfo");
         //发送下载
         for (int i = 0; i < 10; i++) {
             list.add("第" + i + "个协议图片");
@@ -205,7 +203,6 @@ public class ReadAgreementActivity extends BaseActivity {
             agg.setAgree(1);
             sendAgreement(1);
             Intent intent = new Intent(this, InfoConfirmationActivity.class);
-            intent.putExtra("childInfo",(Serializable) childInfo);
             startActivity(intent);
         }else{
             Toast.makeText(this, "请勾选我已阅读", Toast.LENGTH_SHORT).show();

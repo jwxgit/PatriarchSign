@@ -2,10 +2,12 @@ package com.jwx.patriarchsign.app.application;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 
 import com.jwx.patriarchsign.app.tts.SpeechUtilOffline;
+import com.jwx.patriarchsign.msg.ChildInfo;
 
 import org.xutils.x;
 
@@ -22,6 +24,8 @@ public class BaseApplication extends Application {
     private static long              mMainThreadId;
     private   static     SpeechUtilOffline offline;
 
+    public static ChildInfo childInfo;
+    public static Bitmap screenShot;
 
     @Override
     public void onCreate() {

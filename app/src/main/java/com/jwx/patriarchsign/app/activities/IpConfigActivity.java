@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.jwx.patriarchsign.R;
 import com.jwx.patriarchsign.data.constants.Constances;
 import com.jwx.patriarchsign.data.constants.Interface;
+import com.jwx.patriarchsign.netservice.SocketService;
 import com.jwx.patriarchsign.utils.SpUtils;
 import com.jwx.patriarchsign.utils.UIUtil;
 
@@ -106,6 +107,15 @@ public class IpConfigActivity extends BaseActivity {
         SpUtils.commite();
         //更新IP 和 端口
       //  Interface.updateBaseUrl();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Intent sericeIntent = new Intent(IpConfigActivity.this, SocketService.class);
+                IpConfigActivity.this.stopService(sericeIntent);
+                IpConfigActivity.this.startService(sericeIntent);
+            }
+        }).start();
+
         Intent intent = new Intent(this, IndexActivity.class);
         startActivity(intent);
 

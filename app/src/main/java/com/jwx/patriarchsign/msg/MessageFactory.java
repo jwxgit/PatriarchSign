@@ -120,7 +120,7 @@ public class MessageFactory {
         message.setMsgTimestamp(dateStr);
         message.setMsgType(msgType);
         SignImage  signImage = new SignImage();
-        signImage.setImgName("");
+        signImage.setImgName(fileName);
         signImage.setImgType(imgType);
         String bmpStr = Base64.encodeToString(bmp, Base64.DEFAULT);
         signImage.setImgContent(bmpStr);

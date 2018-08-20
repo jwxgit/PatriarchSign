@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 
 import com.jwx.patriarchsign.R;
+import com.jwx.patriarchsign.app.application.BaseApplication;
 import com.jwx.patriarchsign.constant.MessageType;
 import com.jwx.patriarchsign.msg.ChildInfo;
 import com.jwx.patriarchsign.msg.Command;
@@ -104,14 +105,14 @@ public class InfoConfirmationActivity extends BaseActivity {
 
     private void initView() {
 
-        if(childInfo==null){
+        if (BaseApplication.childInfo == null) {
             //异常提示， 返回待机页面
         }
 
-        tName.setText(String.valueOf(childInfo.getChilName()));
-        tBirthDay.setText(childInfo.getChilBirthday());
+        tName.setText(String.valueOf(BaseApplication.childInfo.getChilName()));
+        tBirthDay.setText(BaseApplication.childInfo.getChilBirthday());
 
-        tSex.setText(childInfo.getChilSex());
+        tSex.setText(BaseApplication.childInfo.getChilSex());
 
         //初始化表格数据
 

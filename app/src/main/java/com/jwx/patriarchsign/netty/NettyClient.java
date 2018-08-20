@@ -66,6 +66,11 @@ public class NettyClient {
             }
         }
 
+    public void stop() {
+        if (null != socketChannel)
+            socketChannel.close();
+    }
+
     public  static  boolean  sendMessage(SocketMessage message){
         try {
             if(socketChannel!=null){

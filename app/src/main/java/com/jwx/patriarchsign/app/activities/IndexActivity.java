@@ -13,6 +13,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
 import com.jwx.patriarchsign.R;
@@ -63,11 +64,9 @@ public class IndexActivity extends BaseActivity {
                  Object obj=message.getData();
                 if(obj instanceof  ChildInfo) {
                     ChildInfo childInfo= (ChildInfo)obj;
-/*
-                    String [] imgIds  =  childInfo.getHealthModels();
-*/
+                    BaseApplication.childInfo = childInfo;
                     Intent   intent = new Intent(IndexActivity.this, ReadAgreementActivity.class);
-                    intent.putExtra("childInfo",(Serializable) childInfo);
+//                    intent.putExtra("childInfo",(Serializable) childInfo);
                     startActivity(intent);
                 }
              }
@@ -92,6 +91,21 @@ public class IndexActivity extends BaseActivity {
     private void initView() {
         setContentView(R.layout.wait_for);
         x.view().inject(this);
+        ImageView imageView = (ImageView) findViewById(R.id.waltfor);
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // 休眠2秒,延长时间
+                try {
+                    Thread.sleep(2000);
+                } catch (Exception e) {
+
+                }
+                Intent intent = new Intent(IndexActivity.this, IpConfigActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
         //mWorkBenchId = SpUtils.getInt(Constances.SP_KEY_WORKBENCH_ID, -1);
         //initWebView();
     }

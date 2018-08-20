@@ -31,12 +31,20 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // 待机画面
               intent = new Intent(this, IndexActivity.class);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Intent sericeIntent = new Intent(MainActivity.this, SocketService.class);
+                    MainActivity.this.startService(sericeIntent);
+                }
+            }).start();
+
         }
         startActivity(intent);
 
         //开启后台监听数据服务
-        Intent sericeIntent = new Intent(this, SocketService.class);
-        this.startService(sericeIntent);
+//        Intent sericeIntent = new Intent(this, SocketService.class);
+//        this.startService(sericeIntent);
 
         finish();
     }
