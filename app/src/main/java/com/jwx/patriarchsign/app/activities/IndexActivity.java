@@ -95,12 +95,6 @@ public class IndexActivity extends BaseActivity {
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                // 休眠2秒,延长时间
-                try {
-                    Thread.sleep(2000);
-                } catch (Exception e) {
-
-                }
                 Intent intent = new Intent(IndexActivity.this, IpConfigActivity.class);
                 startActivity(intent);
                 return true;

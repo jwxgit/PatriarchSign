@@ -26,6 +26,7 @@ public class BaseApplication extends Application {
 
     public static ChildInfo childInfo;
     public static Bitmap screenShot;
+    public static String BASE_PATH = "";
 
     @Override
     public void onCreate() {

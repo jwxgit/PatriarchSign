@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.jwx.patriarchsign.R;
+import com.jwx.patriarchsign.app.application.BaseApplication;
 import com.jwx.patriarchsign.imageView.ImageLoader;
 import com.jwx.patriarchsign.imageView.ImageViewPager;
 import com.jwx.patriarchsign.imageView.Images;
@@ -31,6 +32,7 @@ import com.jwx.patriarchsign.msg.Agreement;
 import com.jwx.patriarchsign.msg.ChildInfo;
 import com.jwx.patriarchsign.msg.MessageFactory;
 import com.jwx.patriarchsign.msg.SocketMessage;
+import com.jwx.patriarchsign.netservice.SocketService;
 import com.jwx.patriarchsign.netty.NettyClient;
 import com.jwx.patriarchsign.utils.ToastUtils;
 import com.yanzhenjie.permission.AndPermission;
@@ -47,6 +49,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class ReadAgreementActivity extends BaseActivity {
@@ -63,6 +67,7 @@ public class ReadAgreementActivity extends BaseActivity {
     static List<String> list = new ArrayList<>();
 
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +82,19 @@ public class ReadAgreementActivity extends BaseActivity {
         mCheckBox = (CheckBox) findViewById(R.id.checkBox);
         mBtnagree = (Button) findViewById(R.id.button_agree);
         mBtndisagree = (Button) findViewById(R.id.button_disagree);
+
+        // 验证健康询问和疫苗图片是否存在是否存在
+        // 儿童信息从内存缓存中取
+        if (null == BaseApplication.childInfo) {
+            Log.e(this.getClass().getName(), "儿童信息为空,返回等待页");
+            Intent intent = new Intent(ReadAgreementActivity.this, IndexActivity.class);
+            this.startActivity(intent);
+        }
+        ChildInfo childInfo = BaseApplication.childInfo;
+        // 验证文件md5，如果文件在缓存中不存在，就向服务端请求
+        // 验证健康模板是否存在
+        // 验证
+        childInfo.getHealthModels();
 
         //右边协议书列表
         adapter = new BaseAdapter() {
@@ -197,23 +215,20 @@ public class ReadAgreementActivity extends BaseActivity {
     //同意阅读协议 进入信息确认界面
     public void intoNextStep(View view) {
 
-        Log.e("Checked", "是否选中isChecked:" + mCheckBox.isChecked());
-        if(mCheckBox.isChecked()){
-            Agreement agg = new Agreement();
-            agg.setAgree(1);
-            sendAgreement(1);
-            Intent intent = new Intent(this, InfoConfirmationActivity.class);
-            startActivity(intent);
-        }else{
+        if (!mCheckBox.isChecked()) {
             Toast.makeText(this, "请勾选我已阅读", Toast.LENGTH_SHORT).show();
+            return;
         }
-    }
 
-    private  void  sendAgreement(int agree){
-        SocketMessage  message = MessageFactory.ClientMessages.getClientAgreementMessage(1);
-        NettyClient.sendMessage(message);
-    }
+        boolean success = NettyClient.sendMessage(MessageFactory.ClientMessages.getClientAgreementMessage(1));
+        if (!success) {
+            Toast.makeText(this, "发送同意消息失败", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Intent intent = new Intent(this, InfoConfirmationActivity.class);
+        startActivity(intent);
 
+    }
     //取消 跳转到待机画面
     public void disagreeStep(View view){
         Intent intent = new Intent(this, IndexActivity.class);
