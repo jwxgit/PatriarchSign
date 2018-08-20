@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,16 +25,24 @@ import android.widget.Toast;
 
 import com.jwx.patriarchsign.R;
 import com.jwx.patriarchsign.app.application.BaseApplication;
+import com.jwx.patriarchsign.constant.MessageType;
 import com.jwx.patriarchsign.imageView.ImageLoader;
 import com.jwx.patriarchsign.imageView.ImageViewPager;
 import com.jwx.patriarchsign.imageView.Images;
 import com.jwx.patriarchsign.imageView.ZoomImageView;
 import com.jwx.patriarchsign.msg.Agreement;
 import com.jwx.patriarchsign.msg.ChildInfo;
+import com.jwx.patriarchsign.msg.Command;
+import com.jwx.patriarchsign.msg.ImageInfo;
+import com.jwx.patriarchsign.msg.Inoculation;
 import com.jwx.patriarchsign.msg.MessageFactory;
 import com.jwx.patriarchsign.msg.SocketMessage;
 import com.jwx.patriarchsign.netservice.SocketService;
+import com.jwx.patriarchsign.netty.MessageLisener;
+import com.jwx.patriarchsign.netty.MessageLisenerRegister;
 import com.jwx.patriarchsign.netty.NettyClient;
+import com.jwx.patriarchsign.utils.BitmapUtils;
+import com.jwx.patriarchsign.utils.FileUtils;
 import com.jwx.patriarchsign.utils.ToastUtils;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
@@ -62,11 +71,10 @@ public class ReadAgreementActivity extends BaseActivity {
     private  ImageViewPager IP;
     private ImageLoader imageLoader = ImageLoader.getInstance();  //获取图片进行管理的工具类实例。
     private ArrayList<View> viewList;
+    private List<String> nonexistImages = new ArrayList<>();
 
     static int Position;
     static List<String> list = new ArrayList<>();
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,20 +90,10 @@ public class ReadAgreementActivity extends BaseActivity {
         mCheckBox = (CheckBox) findViewById(R.id.checkBox);
         mBtnagree = (Button) findViewById(R.id.button_agree);
         mBtndisagree = (Button) findViewById(R.id.button_disagree);
-
+        initMessageLisener();
         // 验证健康询问和疫苗图片是否存在是否存在
-        // 儿童信息从内存缓存中取
-        if (null == BaseApplication.childInfo) {
-            Log.e(this.getClass().getName(), "儿童信息为空,返回等待页");
-            Intent intent = new Intent(ReadAgreementActivity.this, IndexActivity.class);
-            this.startActivity(intent);
-        }
-        ChildInfo childInfo = BaseApplication.childInfo;
-        // 验证文件md5，如果文件在缓存中不存在，就向服务端请求
-        // 验证健康模板是否存在
-        // 验证
-        childInfo.getHealthModels();
-
+        nonexistImages.clear();
+        loadingImages();
         //右边协议书列表
         adapter = new BaseAdapter() {
             @Override
@@ -146,6 +144,61 @@ public class ReadAgreementActivity extends BaseActivity {
         };
         AndPermission.with(this).requestCode(200).permission(Manifest.permission.WRITE_EXTERNAL_STORAGE).callback(listener).start();
 
+    }
+
+    private void initMessageLisener() {
+        MessageLisenerRegister.registMessageLisener(MessageType.SERVER_PUSH_IMAGE, new MessageLisener() {
+            @Override
+            public void onMessage(SocketMessage message) {
+                Object data = message.getData();
+                if (data instanceof ImageInfo) {
+                    //获取图片后，先写入本地，再缓存起来
+                    ImageInfo imageInfo = (ImageInfo) data;
+                    String path = BaseApplication.BASE_PATH + imageInfo.getImgMd5() + ".jpg";
+                    if (FileUtils.generateFile(imageInfo.getImgContent(), path)) {
+                        Log.i(ReadAgreementActivity.class.getName(), "缓存图片：MD5=" + imageInfo.getImgMd5());
+                        BaseApplication.IMAGE_CACHE.put(imageInfo.getImgMd5(), path);
+                        nonexistImages.remove(imageInfo.getImgMd5());
+                    }
+                }
+                // 为空说明图片都已经加载完成
+                if (null == nonexistImages || nonexistImages.size() == 0) {
+                    Log.i(ReadAgreementActivity.class.getName(), "图片都已经加载完成......");
+                    // todo 去掉loading
+                }
+            }
+        });
+    }
+
+    // 获取知情同意书图片MD5列表
+    private List<String> loadingImages() {
+        // 儿童信息从内存缓存中取
+        if (null == BaseApplication.childInfo) {
+            Log.e(this.getClass().getName(), "儿童信息为空,返回等待页");
+            Intent intent = new Intent(ReadAgreementActivity.this, IndexActivity.class);
+            this.startActivity(intent);
+        }
+        List<String> result = new ArrayList<>();
+        ChildInfo childInfo = BaseApplication.childInfo;
+        String[] healthMd5 = childInfo.getHealthModels();
+        if (null != healthMd5 && healthMd5.length > 0) {
+            for (String picMd5 : healthMd5) {
+                result.add(picMd5);
+            }
+        }
+        if (null != childInfo.getInoculations() && childInfo.getInoculations().size() > 0) {
+            for (Inoculation inoculation : childInfo.getInoculations()) {
+                result.add(inoculation.getInocModel());
+            }
+        }
+        // 获取不存在的图片
+        for (String md5 : result) {
+            if (!TextUtils.isEmpty(md5) && TextUtils.isEmpty(BaseApplication.IMAGE_CACHE.get(md5))) {
+                nonexistImages.add(md5);
+                NettyClient.sendMessage(MessageFactory.ClientMessages.getClientGetConsentFormMessage(md5));
+            }
+        }
+        return result;
     }
 
 

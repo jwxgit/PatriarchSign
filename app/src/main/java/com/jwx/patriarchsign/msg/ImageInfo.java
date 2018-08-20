@@ -35,4 +35,6 @@ public class ImageInfo extends BaseInfo {
     public void setImgContent(String imgContent) {
         this.imgContent = imgContent;
     }
+
+
 }

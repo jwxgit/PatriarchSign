@@ -87,7 +87,7 @@ public class BitmapUtils {
 
     public static void saveBitmap(Bitmap bitmap, String bitName) {
         try {
-            File file = new File("/data/data/com.jwx.patriarchsign/screenshot/" + bitName);
+            File file = new File("/data/data/com.jwx.patriarchsign/cache/" + bitName);
             if (file.exists()) {
                 file.delete();
             }

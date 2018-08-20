@@ -1,13 +1,10 @@
 package com.jwx.patriarchsign.msg;
 
 
-import android.graphics.Bitmap;
 import android.util.Base64;
 
 import com.jwx.patriarchsign.constant.MessageType;
-import com.jwx.patriarchsign.utils.BitmapUtils;
 import com.jwx.patriarchsign.utils.DateUtil;
-import com.jwx.patriarchsign.utils.ImageUtils;
 import com.jwx.patriarchsign.utils.Md5Utils;
 
 import java.util.Date;
@@ -91,16 +88,16 @@ public class MessageFactory {
          *
          * @return
          */
-        public static SocketMessage getClientGetConsentFormMessage(String imgId) {
+        public static SocketMessage getClientGetConsentFormMessage(String imgMd5) {
             SocketMessage message = new SocketMessage();
             message.setMsgId(UUID.randomUUID().toString());
             String dateStr = DateUtil.dateToString(new Date(), DateUtil.YEAR_TO_MINSECOND);
             message.setMsgTimestamp(dateStr);
-            message.setMsgType("CLIENT_GET_CONSENT_FORM");
+            message.setMsgType(MessageType.CLIENT_GET_CONSENT_FORM);
             message.setMsgMd5(Md5Utils.convertMD5(dateStr));
-            ImgId  imgId1=new ImgId();
-            imgId1.setImgId(imgId);
-            message.setData(imgId1);
+            ImageReq imageReq = new ImageReq();
+            imageReq.setImgMd5(imgMd5);
+            message.setData(imageReq);
             return message;
         }
     }
