@@ -3,8 +3,8 @@ package com.jwx.patriarchsign.netty;
 import com.alibaba.fastjson.JSON;
 import com.jwx.patriarchsign.constant.MessageType;
 import com.jwx.patriarchsign.msg.SocketMessage;
-import com.jwx.patriarchsign.netty.coder.MessageDecoder;
-import com.jwx.patriarchsign.netty.coder.MessageEncoder;
+import com.jwx.patriarchsign.netty.coder.MessageByteDecoder;
+import com.jwx.patriarchsign.netty.coder.MessageByteEncoder;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
@@ -39,8 +39,8 @@ public class NettyClient {
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         ChannelPipeline p = socketChannel.pipeline();
                         p.addLast(new IdleStateHandler(20,10,0));
-                        p.addLast(new MessageDecoder());
-                        p.addLast(new MessageEncoder());
+                        p.addLast(new MessageByteDecoder());
+                        p.addLast(new MessageByteEncoder());
                         p.addLast(new NettyClientHandler());
                     }
                 });
