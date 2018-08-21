@@ -59,14 +59,14 @@
 
                         <ProgressBar
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="上传中，请稍等"
                             android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp18"/>
+                            android:textSize="@dimen/sp18" />
                     </LinearLayout>
 
                     <TextView

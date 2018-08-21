@@ -1,0 +1,99 @@
+package com.jwx.patriarchsign.msg;
+
+import java.io.Serializable;
+
+/*
+ * 接种信息
+ */
+public class Inoculation implements Serializable {
+    /*
+     * 疫苗编码
+     */
+    private String inocBactCode;
+
+    /*
+     * 疫苗名称
+     */
+    private String inocBactName;
+
+    /*
+     * 接种医生
+     */
+    private String inocDoctor;
+
+    /*
+     * 疫苗批次号
+     */
+    private String inocBatchNo;
+
+    /*
+     * 疫苗生产产家
+     */
+    private String inocCorpName;
+
+    /*
+     * 知情同意书模板
+     */
+    private String inocModel;
+
+    /*
+     * 有效期
+     */
+    private String inocValidDate;
+
+    public String getInocBactCode() {
+        return inocBactCode;
+    }
+
+    public void setInocBactCode(String inocBactCode) {
+        this.inocBactCode = inocBactCode;
+    }
+
+    public String getInocBactName() {
+        return inocBactName;
+    }
+
+    public void setInocBactName(String inocBactName) {
+        this.inocBactName = inocBactName;
+    }
+
+    public String getInocDoctor() {
+        return inocDoctor;
+    }
+
+    public void setInocDoctor(String inocDoctor) {
+        this.inocDoctor = inocDoctor;
+    }
+
+    public String getInocBatchNo() {
+        return inocBatchNo;
+    }
+
+    public void setInocBatchNo(String inocBatchNo) {
+        this.inocBatchNo = inocBatchNo;
+    }
+
+    public String getInocCorpName() {
+        return inocCorpName;
+    }
+
+    public void setInocCorpName(String inocCorpName) {
+        this.inocCorpName = inocCorpName;
+    }
+
+    public String getInocValidDate() {
+        return inocValidDate;
+    }
+
+    public void setInocValidDate(String inocValidDate) {
+        this.inocValidDate = inocValidDate;
+    }
+
+    public String getInocModel() {
+        return inocModel;
+    }
+
+    public void setInocModel(String inocModel) {
+        this.inocModel = inocModel;
+    }
+}

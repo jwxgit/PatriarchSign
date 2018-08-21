@@ -2,12 +2,18 @@ package com.jwx.patriarchsign.app.application;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 
 import com.jwx.patriarchsign.app.tts.SpeechUtilOffline;
+import com.jwx.patriarchsign.msg.ChildInfo;
 
 import org.xutils.x;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * By: 菜花
@@ -21,6 +27,12 @@ public class BaseApplication extends Application {
     private static Looper            mMainThreadLooper;
     private static long              mMainThreadId;
     private   static     SpeechUtilOffline offline;
+
+    public static ChildInfo childInfo;
+    public static Bitmap screenShot;
+    //    public static LruCache<String, Bitmap> mMemoryCache;
+    public static String BASE_PATH = "/data/data/com.jwx.patriarchsign/cache/images/";
+    public static Map<String, String> IMAGE_CACHE = new HashMap<>();
 
 
     @Override
@@ -40,6 +52,17 @@ public class BaseApplication extends Application {
         mMainThreadLooper = getMainLooper();
         init();
         offline = new SpeechUtilOffline(mContext);
+
+        // 缓存图片
+        File directory = new File(BASE_PATH);
+        if (directory.exists() && directory.isDirectory()) {
+            for (File f : directory.listFiles()) {
+                IMAGE_CACHE.put(f.getName(), f.getAbsolutePath());
+            }
+        } else {
+            // 创建目录
+            directory.mkdirs();
+        }
     }
 
     private void init() {

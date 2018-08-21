@@ -198,6 +198,11 @@ public class FaceCollectionActivity extends BaseActivity implements IPaFaceDetec
                 mCommitLayout.setVisibility(View.VISIBLE);
                 mSurfaceView.setVisibility(View.INVISIBLE);
                 va2.start();
+
+                Intent intent = new Intent();
+                intent.putExtra("photoBmp", BitmapUtils.Bitmap2Bytes(mFaceBmp, Bitmap.CompressFormat.JPEG, 50));
+                setResult(RESULT_OK, intent);
+                finish();
             }
 
             @Override
@@ -223,10 +228,8 @@ public class FaceCollectionActivity extends BaseActivity implements IPaFaceDetec
 
     public void commitImg(View view) {
         if (mParentInfo == null) {
-            Bundle bundle = new Bundle();
-            bundle.putByteArray("bmp", BitmapUtils.Bitmap2Bytes(mFaceBmp, Bitmap.CompressFormat.JPEG, 50));
             Intent intent = new Intent();
-            intent.putExtras(bundle);
+            intent.putExtra("photoBmp", BitmapUtils.Bitmap2Bytes(mFaceBmp, Bitmap.CompressFormat.JPEG, 50));
             setResult(RESULT_OK, intent);
             finish();
         } else {

@@ -2,6 +2,7 @@ package com.jwx.patriarchsign.app.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -12,18 +13,30 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
+import com.alibaba.fastjson.JSON;
 import com.jwx.patriarchsign.R;
 import com.jwx.patriarchsign.app.application.ActivityManager;
 import com.jwx.patriarchsign.app.application.BaseApplication;
 import com.jwx.patriarchsign.app.dialog.PasswordInputDialog;
+import com.jwx.patriarchsign.constant.MessageType;
 import com.jwx.patriarchsign.data.constants.Constances;
 import com.jwx.patriarchsign.data.constants.Interface;
+import com.jwx.patriarchsign.imageView.ImageLoader;
+import com.jwx.patriarchsign.msg.ChildInfo;
+import com.jwx.patriarchsign.msg.MessageFactory;
+import com.jwx.patriarchsign.msg.SocketMessage;
+import com.jwx.patriarchsign.netty.MessageLisener;
+import com.jwx.patriarchsign.netty.MessageLisenerRegister;
+import com.jwx.patriarchsign.netty.NettyClient;
 import com.jwx.patriarchsign.utils.LogUtils;
 import com.jwx.patriarchsign.utils.SpUtils;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
+
+import java.io.Serializable;
 
 /**
  * Created by Administrator on 2017/11/8 0008.
@@ -32,7 +45,6 @@ import org.xutils.x;
 public class IndexActivity extends BaseActivity {
     @ViewInject(R.id.web_view)
     private WebView mWebView;
-    private int     mWorkBenchId;
     private int     mClickStep; //点击次数  达到5次弹出密码输入框
     private Handler mHandler = new Handler();
     private boolean mIsSigning;
@@ -42,13 +54,54 @@ public class IndexActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
+        registMessageLisener();
+    }
+    private void registMessageLisener() {
+        //注册监听开始签核消息
+         MessageLisenerRegister.registMessageLisener(MessageType.SERVER_SIGNATURE_START, new MessageLisener() {
+             @Override
+             public void onMessage(SocketMessage message) {
+                 Object obj=message.getData();
+                if(obj instanceof  ChildInfo) {
+                    ChildInfo childInfo= (ChildInfo)obj;
+                    BaseApplication.childInfo = childInfo;
+                    Intent   intent = new Intent(IndexActivity.this, ReadAgreementActivity.class);
+//                    intent.putExtra("childInfo",(Serializable) childInfo);
+                    startActivity(intent);
+                }
+             }
+         });
     }
 
+    //判断图片是否存在
+    private  void  loadImg(String [] imgIds){
+        if(imgIds!=null){
+            for(String id:imgIds){
+                Bitmap  bitmap = ImageLoader.getInstance().getBitmapFromMemoryCache(id);
+                if(bitmap==null){
+                    SocketMessage socketMessage = MessageFactory.ClientMessages.getClientGetConsentFormMessage(id);
+                    NettyClient.sendMessage(socketMessage);
+                }
+            }
+        }
+    }
+
+
+
     private void initView() {
-        setContentView(R.layout.activity_index);
+        setContentView(R.layout.wait_for);
         x.view().inject(this);
-        mWorkBenchId = SpUtils.getInt(Constances.SP_KEY_WORKBENCH_ID, -1);
-        initWebView();
+        ImageView imageView = (ImageView) findViewById(R.id.waltfor);
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(IndexActivity.this, IpConfigActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+        //mWorkBenchId = SpUtils.getInt(Constances.SP_KEY_WORKBENCH_ID, -1);
+        //initWebView();
     }
 
 
@@ -80,9 +133,9 @@ public class IndexActivity extends BaseActivity {
         webSettings.setAppCacheEnabled(false);
         mWebView.addJavascriptInterface(new JSInterface(this), "android");
         mWebView.setWebViewClient(new WebViewClient());
-        mWebView.loadUrl(Interface.getBaseUrl() + Interface.URL_INDEX + "?workbenchId=" + mWorkBenchId);
-//        mHeartBeatTask = new WebHeartBeatTask();
-//        mHeartBeatTask.start();
+//      mWebView.loadUrl(Interface.getBaseUrl() + Interface.URL_INDEX + "?workbenchId=" + mWorkBenchId);
+//      mHeartBeatTask = new WebHeartBeatTask();
+//      mHeartBeatTask.start();
     }
 
     public void showMenu(View view) {
@@ -107,12 +160,19 @@ public class IndexActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         mIsSigning = false;
+        //注册监听器
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mIsSigning = true;
+     //   unRegistMessageLisener();
+    }
+
+    private void unRegistMessageLisener() {
+         MessageLisenerRegister.unRegistMessageLisener(MessageType.SERVER_SIGNATURE_START);
     }
 
     @Override
@@ -183,6 +243,7 @@ public class IndexActivity extends BaseActivity {
             intent.putExtra("fingerPrints", fingerPrints);
             intent.putExtra("signature", signature);
             intent.putExtra("pic", pic);
+
             startActivity(intent);
         }
 

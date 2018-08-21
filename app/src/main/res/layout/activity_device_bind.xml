@@ -65,7 +65,7 @@
             android:layout_marginRight="@dimen/w20"
             android:layout_toLeftOf="@+id/bind_table_name"
             android:text="当前已绑定至："
-            android:textSize="@dimen/sp18"/>
+            android:textSize="@dimen/sp18" />
 
         <TextView
             android:id="@+id/bind_table_name"
@@ -81,7 +81,7 @@
             android:paddingRight="@dimen/w10"
             android:text="一号登记台"
             android:textColor="@color/colorThemeText"
-            android:textSize="@dimen/sp16"/>
+            android:textSize="@dimen/sp16" />
 
         <Button
             android:id="@+id/unbind_bt"
@@ -94,7 +94,7 @@
             android:onClick="unBindDevice"
             android:text="解绑"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/sp18"/>
+            android:textSize="@dimen/sp18" />
     </RelativeLayout>
 
     <LinearLayout

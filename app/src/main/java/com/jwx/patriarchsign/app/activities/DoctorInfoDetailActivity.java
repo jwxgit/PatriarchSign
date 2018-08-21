@@ -77,7 +77,7 @@ public class DoctorInfoDetailActivity extends BaseActivity {
 
     private void initData() {
         mDoctorInfo = (DoctorItemInfo) getIntent().getSerializableExtra("info");
-        mTtle.setText(mDoctorInfo.getUsername() + "的个人信息");
+       // mTtle.setText(mDoctorInfo.getUsername() + "的个人信息");
         if (mDoctorInfo != null && mDoctorInfo.getState() != 2) {
             new DoctorDetailProtocol((mDoctorInfo).getUserId())
                     .getDataFromNet(new BaseProtocol.LoadCallback<DoctorItemInfo>() {

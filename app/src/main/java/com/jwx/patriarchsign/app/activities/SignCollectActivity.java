@@ -1,6 +1,7 @@
 package com.jwx.patriarchsign.app.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -96,10 +97,8 @@ public class SignCollectActivity extends BaseActivity {
 
     public void commitSign(View view) {
         if (mParentInfo == null) {
-            Bundle bundle = new Bundle();
-            bundle.putByteArray("bmp", BitmapUtils.Bitmap2Bytes(mSignPad.getTransparentSignatureBitmap()));
             Intent intent = new Intent();
-            intent.putExtras(bundle);
+            intent.putExtra("signBmp", BitmapUtils.Bitmap2Bytes(mSignPad.getTransparentSignatureBitmap()));
             setResult(RESULT_OK, intent);
             finish();
         } else {
