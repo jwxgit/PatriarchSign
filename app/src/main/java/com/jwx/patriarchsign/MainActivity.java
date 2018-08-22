@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import com.jwx.patriarchsign.app.activities.IndexActivity;
 import com.jwx.patriarchsign.app.activities.IpConfigActivity;
 import com.jwx.patriarchsign.data.constants.Constances;
+import com.jwx.patriarchsign.netservice.ScreenshotService;
 import com.jwx.patriarchsign.netservice.SocketService;
 import com.jwx.patriarchsign.socket.AbstractSocketClient;
 import com.jwx.patriarchsign.utils.SpUtils;
@@ -21,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         ip = SpUtils.getString(Constances.SP_KEY_ID_ADDRESS, "");
         port = SpUtils.getString(Constances.SP_KEY_PORT, "");
         //ip配置
@@ -35,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Intent sericeIntent = new Intent(MainActivity.this, SocketService.class);
-                    MainActivity.this.startService(sericeIntent);
+                    startService(sericeIntent);
+                    Intent screenIntent = new Intent(MainActivity.this, ScreenshotService.class);
+                    startService(screenIntent);
                 }
             }).start();
 
