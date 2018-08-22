@@ -77,6 +77,8 @@ public class ReadAgreementActivity extends BaseActivity {
 
     static int Position;
     static List<String> list = new ArrayList<>();
+    // 需要展示的知情同意书列表
+    private List<String> informes = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,7 +97,12 @@ public class ReadAgreementActivity extends BaseActivity {
         initMessageLisener();
         // 验证健康询问和疫苗图片是否存在是否存在
         nonexistImages.clear();
-        loadingImages();
+        // todo 图片加载步骤
+        // 1.访问本地缓存，有直接加载
+        // 2.如果没有，向服务端发送消息请求图片（异步）
+        // 3.监听器接收到服务端发送过来的图片进行缓存起来（一张一张异步发送）
+        // 4.设置loading,等图片全部加载完成就进行展示，结束loading
+        informes = loadingImages();
         //右边协议书列表
         adapter = new BaseAdapter() {
             @Override
@@ -166,7 +173,7 @@ public class ReadAgreementActivity extends BaseActivity {
                 // 为空说明图片都已经加载完成
                 if (null == nonexistImages || nonexistImages.size() == 0) {
                     Log.i(ReadAgreementActivity.class.getName(), "图片都已经加载完成......");
-                    // todo 去掉loading
+                    // todo 去掉loading ，注意loading要能设置超时时间，防止图片没收到一直处于loading
                 }
             }
         });
@@ -181,8 +188,9 @@ public class ReadAgreementActivity extends BaseActivity {
         });
     }
 
-    // 获取知情同意书图片MD5列表
+    // 获取需要展示的知情同意书图片MD5列表
     private List<String> loadingImages() {
+        // todo 添加 loading
         // 儿童信息从内存缓存中取
         if (null == BaseApplication.childInfo) {
             Log.e(this.getClass().getName(), "儿童信息为空,返回等待页");

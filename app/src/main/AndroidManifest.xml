@@ -76,6 +76,8 @@
         </activity>
 
         <service android:name="com.jwx.patriarchsign.netservice.SocketService"/>
+        <service android:name="com.jwx.patriarchsign.netservice.ScreenshotService" />
+
     </application>
 
 </manifest>
