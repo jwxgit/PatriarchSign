@@ -100,6 +100,15 @@ public class InfoConfirmationActivity extends BaseActivity {
                 }
             }
         });
+
+        // 强制退出
+        MessageLisenerRegister.registMessageLisener(MessageType.SERVER_SIGNATURE_CANCEL, new MessageLisener() {
+            @Override
+            public void onMessage(SocketMessage message) {
+                Intent intent = new Intent(InfoConfirmationActivity.this, IndexActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

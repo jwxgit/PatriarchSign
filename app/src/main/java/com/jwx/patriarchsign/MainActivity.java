@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
               intent = new Intent(this, IpConfigActivity.class);
         } else {
             // 待机画面
-              intent = new Intent(this, IndexActivity.class);
+            intent = new Intent(this, IndexActivity.class);
             new Thread(new Runnable() {
                 @Override
                 public void run() {

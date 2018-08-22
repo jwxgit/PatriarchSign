@@ -55,6 +55,8 @@ public class IndexActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         initView();
         registMessageLisener();
+        // 清理儿童信息
+        clearChildInfo();
     }
     private void registMessageLisener() {
         //注册监听开始签核消息
@@ -71,6 +73,10 @@ public class IndexActivity extends BaseActivity {
                 }
              }
          });
+    }
+
+    private void clearChildInfo() {
+        BaseApplication.childInfo = null;
     }
 
     //判断图片是否存在

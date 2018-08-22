@@ -1,6 +1,8 @@
 package com.jwx.patriarchsign.app.activities;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -168,6 +170,15 @@ public class ReadAgreementActivity extends BaseActivity {
                 }
             }
         });
+
+        // 强制退出
+        MessageLisenerRegister.registMessageLisener(MessageType.SERVER_SIGNATURE_CANCEL, new MessageLisener() {
+            @Override
+            public void onMessage(SocketMessage message) {
+                Intent intent = new Intent(ReadAgreementActivity.this, IndexActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     // 获取知情同意书图片MD5列表
@@ -284,11 +295,27 @@ public class ReadAgreementActivity extends BaseActivity {
     }
     //取消 跳转到待机画面
     public void disagreeStep(View view){
-        Intent intent = new Intent(this, IndexActivity.class);
-/*
-        intent.putExtra("childInfo",childInfo);
-*/
-        startActivity(intent);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("是否取消接种?");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+                // 清除儿童数据
+                BaseApplication.childInfo = null;
+                if (null != list) list.clear();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override

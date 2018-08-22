@@ -11,8 +11,12 @@ import android.widget.ImageView;
 import com.jwx.patriarchsign.R;
 import com.jwx.patriarchsign.app.View.signpad.views.SignaturePad;
 import com.jwx.patriarchsign.app.application.BaseApplication;
+import com.jwx.patriarchsign.constant.MessageType;
 import com.jwx.patriarchsign.data.cache.BitmapCache;
 import com.jwx.patriarchsign.data.domain.ParentInfo;
+import com.jwx.patriarchsign.msg.SocketMessage;
+import com.jwx.patriarchsign.netty.MessageLisener;
+import com.jwx.patriarchsign.netty.MessageLisenerRegister;
 import com.jwx.patriarchsign.utils.BitmapUtils;
 import com.jwx.patriarchsign.utils.LogUtils;
 import com.jwx.patriarchsign.utils.UploadUtil;
@@ -48,6 +52,7 @@ public class SignCollectActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initMessageLisener();
         initView();
     }
 
@@ -143,5 +148,17 @@ public class SignCollectActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         BaseApplication.getOffline().stop();
+    }
+
+
+    private void initMessageLisener() {
+        // 强制退出
+        MessageLisenerRegister.registMessageLisener(MessageType.SERVER_SIGNATURE_CANCEL, new MessageLisener() {
+            @Override
+            public void onMessage(SocketMessage message) {
+                Intent intent = new Intent(SignCollectActivity.this, IndexActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

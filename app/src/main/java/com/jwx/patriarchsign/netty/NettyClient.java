@@ -1,5 +1,7 @@
 package com.jwx.patriarchsign.netty;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
 import com.jwx.patriarchsign.constant.MessageType;
 import com.jwx.patriarchsign.msg.SocketMessage;
@@ -54,7 +56,7 @@ public class NettyClient {
                     start();
                 }
             } catch (Exception e) {
-
+                Log.e(NettyClient.class.getName(), "连接失败");
             }finally{
 //    		if(null != future){
 //    			if(null != future.channel() && future.channel().isOpen()){

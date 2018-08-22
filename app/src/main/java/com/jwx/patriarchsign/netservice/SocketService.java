@@ -47,12 +47,12 @@ public class SocketService extends Service {
             this.startActivity(intent);
         }
         nettyClient = new NettyClient(Integer.parseInt(port), ip);
-           return super.onStartCommand(intent, flags, startId);
+        return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onCreate() {
-        Logger.getLogger(SocketService.class.getName()).log(Level.INFO,"socket服务创");
+        Logger.getLogger(SocketService.class.getName()).log(Level.INFO, "socket服务创建");
         super.onCreate();
     }
 
